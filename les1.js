@@ -25,7 +25,7 @@ paul.eat();
 
 // OBJECT LITERAL
 var persoonObject = {
-	name: 'Robert Rock',
+	name: 'pete',
 
 	speak: function () {
 		console.log('yo im ' + this.name);
