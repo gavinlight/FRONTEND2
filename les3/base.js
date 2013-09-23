@@ -3,6 +3,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 (function(){
 	// DATA OBJECTEN
 	FRISBEEAPP.schedule = {
+		//zou dit niet beter games kunnen heten?
 		items: [
 		    { date: "Monday, 9:00am", team1: "Chasing", team1Score: "13", team2: "Amsterdam Money Gang", team2Score: "9"},
 		    { date: "Monday, 9:00am", team1: "Boomsquad", team1Score: "15", team2: "Beast Amsterdam", team2Score: "11"},
@@ -18,6 +19,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 	}
 
 	FRISBEEAPP.ranking = {
+		//zou dit niet beter teams kunnen heten?
 		items: [
 		    { team: "Chasing", Win: "2", Lost: "2", Sw: "7", Sl: "9", Pw: "35", Pl: "39"},
 		    { team: "Boomsquad", Win: "2", Lost: "2", Sw: "9", Sl: "8", Pw: "36", Pl: "34"},
@@ -28,6 +30,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 	};
 
 	FRISBEEAPP.game = {
+		//zou dit niet beter scores kunnen heten?
 		items: [
 			{ score: "1", team1: "Boomsquad", team1Score: "1", team2: "Burning Snow", team2Score: "0"},
 			{ score: "2", team1: "Boomsquad", team1Score: "2", team2: "Burning Snow", team2Score: "0"},
