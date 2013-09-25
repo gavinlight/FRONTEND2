@@ -1,6 +1,7 @@
 var FRISBEEAPP = FRISBEEAPP || {};
-
 (function(){
+	'use strict';
+
 	// DATA OBJECTEN
 	FRISBEEAPP.schedule = {
 		items: [
@@ -15,7 +16,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 		    { date: "Monday, 1:00pm", team1: "Chasing", team1Score: "15", team2: "Boomsquad", team2Score: "14"},
 		    { date: "Monday, 1:00pm", team1: "Burning Snow", team1Score: "15", team2: "Amsterdam Money Gang", team2Score: "11"}
 	    ]
-	}
+	};
 
 	FRISBEEAPP.ranking = {
 		items: [
@@ -84,39 +85,113 @@ var FRISBEEAPP = FRISBEEAPP || {};
 
 		change: function () {
             var route = window.location.hash.slice(2),
-                articles = qwery('article[data-route]'),
-                article = qwery('[data-route=' + route + ']')[0];  
-
-            // SHOW ACTIVE ARTICLES, HIDE OTHERS
-            if (articles) {
-            	for (var i=0; i < articles.length; i++){
-            		articles[i].classList.remove('active');
-            	}
-            	article.classList.add('active');
-            }
-
-            // DEFAULT ACTIVE ARTICLE
-            if (!route) {
+                articles = select.dataX('article[data-route]');
+            // CHECK IF ROUTE IS NOT DEFINED IN THE URL
+            if (!route || route == null || route == undefined || route == '') {
+            	// DEFAULT DATA-ROUTE
+            	var article = select.dataX('[data-route=schedule]')[0]; 
+            	// ADD CLASS 'ACTIVE' TO FIRST ARTICLE DATA-ROUTE
             	articles[0].classList.add('active');
+            // CHECK IF ROUTE IS DEFINED IN THE URL
+            } else {
+            	// DATA-ROUTE ACCORDING TO THE URL
+            	var article = select.dataX('[data-route=' + route + ']')[0];
+            	// HIDE ALL ARTICLES
+        		for (var i=0; i < articles.length; i++){
+        			articles[i].classList.remove('active');
+        		}
+        		// SHOW THE ARTICLE THAT IS DEFINED IN THE URL
+        		article.classList.add('active');
             }
-
 		}
 	};
 
 	// PAGES
 	FRISBEEAPP.page = {
 		schedule: function () {
-			Transparency.render(qwery('[data-route=schedule')[0], FRISBEEAPP.schedule);
+			var directives;
+			directives = {
+				items: {
+					team1Final: {
+						text: function(params) {
+							return (this.team1);
+						},
+						class: function(params) {
+							if (this.team1Score > this.team2Score) {
+								return('winner');
+							}
+						}
+					},
+					team2Final: {
+						text: function(params) {
+							return (this.team2);
+						},
+						class: function(params) {
+							if (this.team1Score < this.team2Score) {
+								return('winner');
+							}
+						}
+					}
+				}
+			}
+			Transparency.render(select.dataX('[data-route=schedule]')[0], FRISBEEAPP.schedule, directives);
 			FRISBEEAPP.router.change();
 		},
 
 		ranking: function () {
-			Transparency.render(qwery('[data-route=ranking')[0], FRISBEEAPP.ranking);
-			FRISBEEAPP.router.change();
+			// MANIPULATE THE JSON OBJECT TO CREATE A NEW VALUE
+			var directives;
+   			directives = {
+				items: {
+					ScoreDiff: {
+						text: function(params) {
+							return (this.Pw - this.Pl);
+						}
+					}
+				}
+			}
+			Transparency.render(select.dataX('[data-route=ranking]')[0], FRISBEEAPP.ranking, directives);
+			FRISBEEAPP.router.change();			
 		},
 
 		game: function () {
-			Transparency.render(qwery('[data-route=game')[0], FRISBEEAPP.game);
+			// MANIPULATE THE JSON OBJECT TO CREATE NEW VALUES ACCORDING TO THE PAGE
+			var directives,
+				lastItem = FRISBEEAPP.game['items'][FRISBEEAPP.game['items'].length - 1],
+				head = ['team1Head'];
+   			directives = {
+				team1Head: {
+					text: function(params) {
+						return lastItem['team1'];
+					},
+					class: function(params) {
+						if (parseInt(lastItem['team1Score']) > parseInt(lastItem['team2Score'])) {
+							return('winner');
+						}
+					}
+				},
+				finalScore1: {
+					text: function(params) {
+						return lastItem['team1Score'];
+					}
+				},
+				finalScore2: {
+					text: function(params) {
+						return lastItem['team2Score'];
+					}
+				},
+				team2Head: {
+					text: function(params) {
+						return lastItem['team2'];
+					},
+					class: function(params) {
+						if (parseInt(lastItem['team1Score']) < parseInt(lastItem['team2Score'])) {
+							return('winner');
+						}
+					}
+				},
+			}
+			Transparency.render(select.dataX('[data-route=game]')[0], FRISBEEAPP.game, directives);
 			FRISBEEAPP.router.change();
 		}
 	}
