@@ -1,8 +1,11 @@
+// CREATE A NAMESPACE
 var FRISBEEAPP = FRISBEEAPP || {};
+// CREATE AN ANONYMOUS FUNCTION
 (function(){
+	// USE JAVASCRIPT 'STRICT'
 	'use strict';
 
-	// DATA OBJECTEN
+	// JSON DATA OBJECT
 	FRISBEEAPP.schedule = {
 		items: [
 		    { date: "Monday, 9:00am", team1: "Chasing", team1Score: "13", team2: "Amsterdam Money Gang", team2Score: "9"},
@@ -17,7 +20,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 		    { date: "Monday, 1:00pm", team1: "Burning Snow", team1Score: "15", team2: "Amsterdam Money Gang", team2Score: "11"}
 	    ]
 	};
-
+	// JSON DATA OBJECT
 	FRISBEEAPP.ranking = {
 		items: [
 		    { team: "Chasing", Win: "2", Lost: "2", Sw: "7", Sl: "9", Pw: "35", Pl: "39"},
@@ -27,7 +30,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 		    { team: "Amsterdam Money Gang", Win: "1", Lost: "3", Sw: "6", Sl: "10", Pw: "30", Pl: "37"}
 	    ]
 	};
-
+	// JSON DATA OBJECT
 	FRISBEEAPP.game = {
 		items: [
 			{ score: "1", team1: "Boomsquad", team1Score: "1", team2: "Burning Snow", team2Score: "0"},
@@ -56,7 +59,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 	    ]
 	};
 
-	// CONTROLLER
+	// CONTROLLER TO CONTROL WHAT THE APP NEEDS TO DO WHEN IT FIRST LAUNCHES
 	FRISBEEAPP.controller = {
 		init: function () {
 			FRISBEEAPP.router.init();
@@ -66,6 +69,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 	// ROUTER
 	FRISBEEAPP.router = {
 		init: function () {
+			// USE ROUTIE TO DO CERTAIN STUFF WHEN A PAGE IS ACTIVE IN THE URL
 	  		routie({
 			    '/schedule': function() {
 			    	FRISBEEAPP.page.schedule();
@@ -77,6 +81,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 			    '/game': function() {
 			    	FRISBEEAPP.page.game();
 			    },
+			    // THE DEFAULT PAGE
 			    '*': function() {
 			    	FRISBEEAPP.page.schedule();
 			    }
@@ -84,6 +89,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 		},
 
 		change: function () {
+			// GET THE ROUTE FROM THE URL
             var route = window.location.hash.slice(2),
                 articles = select.dataX('article[data-route]');
             // CHECK IF ROUTE IS NOT DEFINED IN THE URL
@@ -100,8 +106,14 @@ var FRISBEEAPP = FRISBEEAPP || {};
         		for (var i=0; i < articles.length; i++){
         			articles[i].classList.remove('active');
         		}
-        		// SHOW THE ARTICLE THAT IS DEFINED IN THE URL
-        		article.classList.add('active');
+        		// CHECK IF ARTICLE IS NOT DEFINED
+        		if (!article || article == null || article == undefined || article == '') {
+        			// ADD CLASS 'ACTIVE' TO THE FIRST ARTICLE
+        			articles[0].classList.add('active');
+        		} else {
+        			// ADD CLASS 'ACTIVE' TO THE ARTICLE DEFINED IN THE URL
+        			article.classList.add('active');
+        		}
             }
 		}
 	};
@@ -109,6 +121,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 	// PAGES
 	FRISBEEAPP.page = {
 		schedule: function () {
+			// MANIPULATE THE JSON OBJECT TO CREATE NEW VALUES
 			var directives;
 			directives = {
 				items: {
@@ -117,7 +130,8 @@ var FRISBEEAPP = FRISBEEAPP || {};
 							return (this.team1);
 						},
 						class: function(params) {
-							if (this.team1Score > this.team2Score) {
+							// GIVE CLASS 'WINNER' TO THE WINNING TEAM
+							if (parseInt(this.team1Score) > parseInt(this.team2Score)) {
 								return('winner');
 							}
 						}
@@ -127,14 +141,17 @@ var FRISBEEAPP = FRISBEEAPP || {};
 							return (this.team2);
 						},
 						class: function(params) {
-							if (this.team1Score < this.team2Score) {
+							// GIVE CLASS 'WINNER' TO THE WINNING TEAM
+							if (parseInt(this.team1Score) < parseInt(this.team2Score)) {
 								return('winner');
 							}
 						}
 					}
 				}
 			}
+			// USE TRANSPARENCY TO ADD THE JSON DATA TO THE MATCHING HTML ELEMENTS
 			Transparency.render(select.dataX('[data-route=schedule]')[0], FRISBEEAPP.schedule, directives);
+			// CALL THE CHANGE FUNCTION TO CHANGE PAGES
 			FRISBEEAPP.router.change();
 		},
 
@@ -145,26 +162,30 @@ var FRISBEEAPP = FRISBEEAPP || {};
 				items: {
 					ScoreDiff: {
 						text: function(params) {
+							// CALCULATE THE GOAL DIFFERENCE OF A TEAM
 							return (this.Pw - this.Pl);
 						}
 					}
 				}
 			}
+			// USE TRANSPARENCY TO ADD THE JSON DATA TO THE MATCHING HTML ELEMENTS
 			Transparency.render(select.dataX('[data-route=ranking]')[0], FRISBEEAPP.ranking, directives);
+			// CALL THE CHANGE FUNCTION TO CHANGE PAGES
 			FRISBEEAPP.router.change();			
 		},
 
 		game: function () {
 			// MANIPULATE THE JSON OBJECT TO CREATE NEW VALUES ACCORDING TO THE PAGE
 			var directives,
-				lastItem = FRISBEEAPP.game['items'][FRISBEEAPP.game['items'].length - 1],
-				head = ['team1Head'];
+				// PUT THE OBJECT OF THE ARRAY IN A VAR TO NOT REPEAT YOURSELF
+				lastItem = FRISBEEAPP.game['items'][FRISBEEAPP.game['items'].length - 1];
    			directives = {
 				team1Head: {
 					text: function(params) {
 						return lastItem['team1'];
 					},
 					class: function(params) {
+						// CHECK WHAT TEAM IS THE WINNER
 						if (parseInt(lastItem['team1Score']) > parseInt(lastItem['team2Score'])) {
 							return('winner');
 						}
@@ -185,13 +206,16 @@ var FRISBEEAPP = FRISBEEAPP || {};
 						return lastItem['team2'];
 					},
 					class: function(params) {
+						// CHECK WHAT TEAM IS THE WINNER
 						if (parseInt(lastItem['team1Score']) < parseInt(lastItem['team2Score'])) {
 							return('winner');
 						}
 					}
 				},
 			}
+			// USE TRANSPARENCY TO ADD THE JSON DATA TO THE MATCHING HTML ELEMENTS
 			Transparency.render(select.dataX('[data-route=game]')[0], FRISBEEAPP.game, directives);
+			// CALL THE CHANGE FUNCTION TO CHANGE PAGES
 			FRISBEEAPP.router.change();
 		}
 	}
@@ -202,4 +226,5 @@ var FRISBEEAPP = FRISBEEAPP || {};
 		// INITIALIZE CONTROLLER
 		FRISBEEAPP.controller.init();
 	});
+// MAKE THE FUNCTION GET CALLED BY ITSELF
 })();

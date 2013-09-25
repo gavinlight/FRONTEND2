@@ -4,17 +4,18 @@ ol, ul {display: block;list-style: none;}
 
 body{background-color: white;font-family: 'Open Sans', Verdana, sans-serif; font-weight: normal; font-size: 1em;line-height: 140%;}
 
-body > header{font-family:'COUTURE';text-align:center;background-color: #0072ff;position: fixed;top: 0;width: 100%;}
+body > header{font-family:'COUTURE';text-align:center;background-color: #3498db;position: fixed;top: 0;width: 100%;}
 body > header h1{font-size: 2em;margin-top: 30px;}
 nav{margin:20px 0;}
 nav ul li{display: inline-block;margin: 0px 20px;}
-nav a {color: black;}
-nav a:hover {text-decoration: none;}
+nav ul li a {color: black;}
+nav ul li a:hover {text-decoration: none;}
+
+article > header {text-align: center;font-size: 1.5em;font-weight: bolder;}
 
 /* Table */
 table {overflow:hidden;width:90%;margin:50px auto 0;}
-body table:nth-child(1) {margin:0 auto;}
-th {background-color:black;color:white;padding-top:22px;font-weight: bold;}
+th {background-color:black;color:white;padding-top:22px;font-weight: bold;font-family:'COUTURE';}
 th, td {padding:18px 28px 18px; text-align:center;}
 tr:nth-child(odd) td {background: #E0E0E0;}
 .winner:after{content: "*"; color: red;font-size: 1.2em;}
@@ -23,7 +24,7 @@ section {margin-top:150px;}
 section > article {display: none;}
 .active {display: block;}
 
-@media (max-width: 860px){
+@media (max-width: 900px){
 	body > header h1 {font-size: 1.5em;}
 	table {width: 100%;}
 	th, td {padding:18px 10px 18px;}
@@ -31,12 +32,14 @@ section > article {display: none;}
 
 @media (max-width: 670px) {
 	body > header h1 {font-size: 1.2em;}
-	body > header h1 > span {display: block}
+	body > header h1 > span, .title {display: block}
 }
 
 @media (max-width: 520px){
 	table {font-size: 0.7em;}
 	body > header h1 {font-size: 1em;}
-	nav > ul > li {display: block;margin: 3px 0px}
-	body > section {margin-top: 200px}
+	nav a:hover {text-decoration: none;}
+	nav > ul li {display: block;padding:1px 0;width: 100%;margin: 0 auto;}
+	nav > ul li:hover {background-color: #2980b9;}
+	body > section {margin-top: 200px;}
 }
