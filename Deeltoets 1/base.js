@@ -125,10 +125,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 			var directives;
 			directives = {
 				items: {
-					team1Final: {
-						text: function(params) {
-							return (this.team1);
-						},
+					team1: {
 						class: function(params) {
 							// GIVE CLASS 'WINNER' TO THE WINNING TEAM
 							if (parseInt(this.team1Score) > parseInt(this.team2Score)) {
@@ -136,10 +133,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 							}
 						}
 					},
-					team2Final: {
-						text: function(params) {
-							return (this.team2);
-						},
+					team2: {
 						class: function(params) {
 							// GIVE CLASS 'WINNER' TO THE WINNING TEAM
 							if (parseInt(this.team1Score) < parseInt(this.team2Score)) {
