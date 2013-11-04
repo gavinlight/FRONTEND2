@@ -1,0 +1,28 @@
+*:focus, *:hover, *:active {outline: 0;}
+
+.active {display: block !important;}
+section.container {margin-top:75px;}
+.poolGames {display: none;}
+.page header > h1 {font-size: 1.3em;text-align: center;}
+.page {display: none;}
+
+article.pool {position: relative;}
+article.pool header {position: relative;}
+button.poolGameButton.btn.btn-default {position: absolute ;right: 16px ;top:13px ;}
+
+table th,td {text-align: center;}
+
+ul.navbar-nav {padding-top:9.75px;margin: 0px -15px 9.75px;}
+ul.navbar-nav>li:hover {background-color: rgb(255, 255, 255);border-radius: 7px;}
+ul.navbar-collapse {display: none;}
+.navbar-brand {font-weight: 500;}
+
+@media (min-width: 768px) {
+	ul.navbar-nav>li {top:10px;}
+	ul.navbar-nav>li>a {padding-top: 10px;padding-bottom: 10px;}
+	ul.navbar-collapse {display: block !important;}
+}
+
+.loader {font-size:1.5em;display:none;-webkit-animation: load 1s linear infinite;border: .5em dashed black;border-radius: 50%;height: 2em;left: 50%;margin: -1.5em;position: absolute;top: 50%;width: 2em;box-sizing:content-box;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;}
+.loader:after {border: .5em solid #3498db;border-radius: 50%;bottom: .25em;content: '';left: .25em;position: absolute;right: .25em;top: .25em;}
+@-webkit-keyframes load {100% { -webkit-transform: rotate(360deg); }}

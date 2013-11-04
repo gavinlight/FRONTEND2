@@ -77,9 +77,11 @@ var FRISBEEAPP = FRISBEEAPP || {};
 			    '/ranking': function() {
 			    	FRISBEEAPP.page.ranking();
 			    },
-
 			    '/game': function() {
 			    	FRISBEEAPP.page.game();
+			    },
+			    '/movies': function() {
+			    	FRISBEEAPP.page.movies();
 			    },
 			    // THE DEFAULT PAGE
 			    '*': function() {
@@ -122,8 +124,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 	FRISBEEAPP.page = {
 		schedule: function () {
 			// MANIPULATE THE JSON OBJECT TO CREATE NEW VALUES
-			var directives;
-			directives = {
+			var directives = {
 				items: {
 					team1: {
 						class: function(params) {
@@ -151,8 +152,7 @@ var FRISBEEAPP = FRISBEEAPP || {};
 
 		ranking: function () {
 			// MANIPULATE THE JSON OBJECT TO CREATE A NEW VALUE
-			var directives;
-   			directives = {
+   			var directives = {
 				items: {
 					ScoreDiff: {
 						text: function(params) {
@@ -170,10 +170,9 @@ var FRISBEEAPP = FRISBEEAPP || {};
 
 		game: function () {
 			// MANIPULATE THE JSON OBJECT TO CREATE NEW VALUES ACCORDING TO THE PAGE
-			var directives,
-				// PUT THE OBJECT OF THE ARRAY IN A VAR TO NOT REPEAT YOURSELF
-				lastItem = FRISBEEAPP.game['items'][FRISBEEAPP.game['items'].length - 1];
-   			directives = {
+			// PUT THE OBJECT OF THE ARRAY IN A VAR TO NOT REPEAT YOURSELF
+			var	lastItem = FRISBEEAPP.game['items'][FRISBEEAPP.game['items'].length - 1],
+   				directives = {
 				team1Head: {
 					text: function(params) {
 						return lastItem['team1'];
@@ -211,6 +210,14 @@ var FRISBEEAPP = FRISBEEAPP || {};
 			Transparency.render(select.dataX('[data-route=game]')[0], FRISBEEAPP.game, directives);
 			// CALL THE CHANGE FUNCTION TO CHANGE PAGES
 			FRISBEEAPP.router.change();
+		},
+
+		movies: function() {
+			majaX({url:'http://www.dennistel.nl/movies', method:'get'}, function(json) {
+				var output = json;
+				console.log(output);
+				Transparency.render(select.dataX('[data-route=movies]')[0], output);
+			});	
 		}
 	}
 

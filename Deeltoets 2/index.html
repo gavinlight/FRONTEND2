@@ -13,7 +13,6 @@
                     <li><a href="#/schedule">Schedule page</a></li>
                     <li><a href="#/game">Game page</a></li>
                     <li><a href="#/ranking">Ranking page</a></li>
-                    <li><a href="#/movies">Movies</a><li>
                 </ul>
             </nav>
         </header>
@@ -82,39 +81,35 @@
                 </table>
             </article>
 
-            <article data-route="ranking">
-                <header>
-                    <h1>Pool A - Ranking</h1>
-                </header>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Team</th>
-                            <th>W</th>
-                            <th>L</th>
-                            <th>Points won</th>
-                            <th>Points lost</th>
-                            <th>+/-</th>
-                        </tr>
-                    </thead>
-                    <tbody data-bind="items">
-                        <tr>
-                            <td data-bind="team"></td>
-                            <td data-bind="Win"></td>
-                            <td data-bind="Lost"></td>
-                            <td data-bind="Pw"></td>
-                            <td data-bind="Pl"></td>
-                            <td data-bind="ScoreDiff"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </article>
-
-            <article data-route="movies">
-                <h1 data-bind="title"></h1>
-                <time data-bind="release_date"></time>
-                <p data-bind="description"></p>
-            </article>
+            <section data-route="ranking">
+                <article data-bind="objects">
+                    <header>
+                        <h1>Pool <span data-bind="name"></span> - Ranking</h1>
+                    </header>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>W</th>
+                                <th>L</th>
+                                <th>Points won</th>
+                                <th>Points lost</th>
+                                <th>+/-</th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="standings">
+                            <tr>
+                                <td data-bind="team"><a data-bind="teamLink"></a></td>
+                                <td data-bind="wins"></td>
+                                <td data-bind="losses"></td>
+                                <td data-bind="points_scored"></td>
+                                <td data-bind="points_allowed"></td>
+                                <td data-bind="plus_minus"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+            </section>
         </section>
 
     <!-- Libs -->
@@ -122,7 +117,6 @@
     <script src="libs/ready.min.js" type="text/javascript"></script>
     <script src="libs/select.min.js" type="text/javascript"></script>
     <script src="libs/transparancy.min.js" type="text/javascript"></script>
-    <script src="libs/majax.min.js" type="text/javascript"></script>
 
     <!-- Application -->
     <script src="base.js" type="text/javascript"></script>

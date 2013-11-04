@@ -1,0 +1,10 @@
+Pagina's
+	- Game
+		- Een game uitgewerkt
+	- Rankings
+		- Laat de current rankings van het toernooi zien
+	- Schedule
+		- Laat de wedstrijden zien de gespeeld gaan worden
+
+
+var Namespace = FRISBEEAPP;
