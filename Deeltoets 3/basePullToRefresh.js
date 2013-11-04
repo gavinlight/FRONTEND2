@@ -264,17 +264,32 @@ var FRISBEEAPP = FRISBEEAPP || {};
 		},
 
 		swipeUpRefresh: function() {
+			window.onscroll = function() {
+				//console.log(scrollY);
+				if (window.scrollY == 0) {
+					console.log(1);
+					var body = document.body;
+					Hammer(body).on("swipeup", function(event) {
+						FRISBEEAPP.interaction.router();
+		   			});
+				} else if (window.scrollY != 0) {
+					//window.scrollY = window.scrollY;
+					console.log(2);
+					var body = document.body;
+					Hammer(body).on("swipeup", function(event) {
+						FRISBEEAPP.interaction.router();
+		   			});
+				}
+			}
+
 			var body = document.body;
-			Hammer(body).on("swipedown", function(event) {
-				console.log('swipe');
-				anim(body, {marginTop: 150}, 1).anim(0.2).anim(body, {marginTop: 0}, 1).anim(function(){
-					FRISBEEAPP.router.init();
-				});
+			Hammer(body).on("swipeup", function(event) {
+				FRISBEEAPP.router.init();
    			});	
-   		},
+		},
 
 		swipeUpdateScore: function() {
-			var body = document.body;
+			var body = select.nested('section.update_score');
 			var hammertime = Hammer(body).on("swipeleft", function(event) {
 				event.preventDefault();
 				console.log('swipel');
