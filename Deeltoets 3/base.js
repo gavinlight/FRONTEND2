@@ -122,10 +122,17 @@ var FRISBEEAPP = FRISBEEAPP || {};
 						var directives = {
 							objects: {
 								date: {
+									// parse de tijd naar een normaal format
 									text: function(params){
-										var startTime = new Date(this.start_time);
-										var date = startTime.getFullYear() + "/" + startTime.getMonth() + "/" + startTime.getDate();
-										return date;
+										var timeObj = new Date(this.start_time);
+	
+										var hours = timeObj.getHours();
+										var minutes = (timeObj.getMinutes() <10?'0':'') + timeObj.getMinutes();
+										var offset = Math.abs(timeObj.getTimezoneOffset() / 60);
+										var correct_hours = hours + offset;
+	
+										var startTime = correct_hours + ":" + minutes;
+										return startTime;
 									}
 								},
 								update: {
